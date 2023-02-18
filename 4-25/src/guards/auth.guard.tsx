@@ -1,11 +1,27 @@
-import { useSelector } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
-import { PublicRoutes } from '../model'
-import { AppStore } from '../redux/store'
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
+import { PrivateRoutes, PublicRoutes } from '../model';
+import { Private } from '../pages/Private';
+import { AppStore } from '../redux/store';
 
-export const AuthGuard = () => {
-    const userState = useSelector((store: AppStore) => store.user)
-    return userState.name ? <Outlet/> : <Navigate replace to={PublicRoutes.LOGIN} />
+interface Props {
+    privateValidation: boolean;
 }
 
-export default AuthGuard
+const PrivateValidationFragment = <Outlet />;
+const PublicValidationFragment = <Navigate replace to={PrivateRoutes.PRIVATE} />;
+
+export const AuthGuard = ({ privateValidation }: Props) => {
+    const userState = useSelector((store: AppStore) => store.user);
+    return userState.name ? (
+        privateValidation ? (
+            PrivateValidationFragment
+        ) : (
+            PublicValidationFragment
+        )
+    ) : (
+        <Navigate replace to={PublicRoutes.LOGIN} />
+    );
+};
+
+export default AuthGuard;
