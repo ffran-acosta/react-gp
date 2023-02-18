@@ -1,4 +1,4 @@
-import React, {useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 
 function UseMemo() {
 
@@ -14,15 +14,12 @@ function UseMemo() {
 
     return (
         <div className="App">
-
             <h1>{name}</h1>
-
             <button onClick={handleClick}>Click here to change name</button>
-
             {changedName}
-
         </div>
     )
+
 }
 
 export default UseMemo
